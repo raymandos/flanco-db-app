@@ -33,13 +33,10 @@ public class EmployeeService {
         return employeeRepository.existsById(employee.getId());
     }
 
-    public void saveEmployee(Employee employee) throws EntityExistsException {
-        if(!isDuplicate(employee)) {
-            employeeRepository.saveEmployee(employee.getId(), employee.getName(), employee.getAddress(), employee.getTelephone(),
-                    employee.getBirthdate(), employee.getSalary(), employee.getDepartment_id(), employee.getBranch_id());
-        } else {
-            throw new EntityExistsException("Employee " + employee.getName() + " already exists");
-        }
+    public void saveEmployee(Employee employee) {
+        employeeRepository.save(employee);
+//            employeeRepository.saveEmployee(employee.getId(), employee.getName(), employee.getAddress(), employee.getTelephone(),
+//                    employee.getBirthdate(), employee.getSalary(), employee.getDepartment_id(), employee.getBranch_id());
     }
 
     public void deleteEmployeeById(String id)

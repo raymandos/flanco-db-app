@@ -40,13 +40,9 @@ public class EmployeeController {
         model.addAttribute("employee", employee);
         return "redirect:/employees";
     }
-    @PostMapping("/employees/create")
+    @PostMapping("/employees/add")
     public String createEmployee(@ModelAttribute("employee") final Employee employee) {
-        try {
             employeeService.saveEmployee(employee);
-        } catch (Exception e) {
-            return "redirect:/employees?duplicate=true";
-        }
         return "redirect:/employees";
     }
     @GetMapping("/employees/delete/{id}")
