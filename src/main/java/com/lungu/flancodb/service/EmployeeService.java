@@ -36,7 +36,7 @@ public class EmployeeService {
     public void saveEmployee(Employee employee) throws EntityExistsException {
         if(!isDuplicate(employee)) {
             employeeRepository.saveEmployee(employee.getId(), employee.getName(), employee.getAddress(), employee.getTelephone(),
-                    employee.getSalary(), employee.getDepartment_id(), employee.getBranch_id());
+                    employee.getBirthdate(), employee.getSalary(), employee.getDepartment_id(), employee.getBranch_id());
         } else {
             throw new EntityExistsException("Employee " + employee.getName() + " already exists");
         }
