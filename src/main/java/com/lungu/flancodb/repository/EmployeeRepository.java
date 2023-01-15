@@ -14,8 +14,18 @@ import java.util.Optional;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
 
-    @Query("select e from Employee e")
+    @Query("select e from Employee e order by e.name")
     List<Employee> findAll();
+    @Query("select e from Employee e where e.branch_id in (select b.name from Branch b where b.id = e.branch_id) ")
+    List<Employee> findAllWithBranch();
+    @Query("select e from Employee e where e.department_id in (select d.name from Department d where d.id = e.department_id)")
+    List<Employee> findAllWithDepartment();
+    @Modifying
+    @Query("update Employee e set e.id = ?1, e.name = ?2, e.address = ?3, e.telephone = ?4, e.birthdate=?5," +
+            "e.salary = ?6, e.department_id = (select d.id from Department d where d.id = ?7)," +
+            "e.branch_id = (select b.id from Branch b where b.id = ?8)")
+    void updateById(String id, String name, String address, String telephone, String birthdate,Integer salary,
+                    String department_id, String branch_id);
     @Query("select e from Employee e where e.id = ?1")
     Optional<Employee> findById(String id);
     @Modifying
